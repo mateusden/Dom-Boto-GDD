@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dom Boto - Game Design Document</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+<style>
+  /* Reset e base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #f6f3ef 0%, #dcd7ca 100%);
+    color: #2b7a78;
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Container flex */
+  .container {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 300px;
+    background: linear-gradient(180deg, #d49a2a, #2b7a78);
+    box-shadow: 0 8px 20px rgba(43, 122, 120, 0.4);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 40px;
+    border-radius: 0 24px 24px 0;
+    color: #f6f3ef;
+  }
+  .sidebar-header {
+    padding: 32px 24px;
+    text-align: center;
+    background: rgba(255 255 255 / 0.1);
+    border-radius: 0 24px 24px 0;
+    margin-bottom: 20px;
+    user-select: none;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+  .logo img{
+    width: 46px;
+    margin-bottom: -3px;
+  }
+  .subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    font-style: italic;
+    opacity: 0.9;
+  }
+
+  /* Botão de troca de tema */
+  #toggleTheme {
+    background: none;
+    border: none;
+    color: #f6f3ef;
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease;
+    margin-bottom: 12px;
+  }
+  #toggleTheme:hover {
+    color: #ffd54f;
+  }
+
+  .nav-menu {
+    padding: 0 12px;
+  }
+  .nav-category {
+    padding: 12px 16px 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+    opacity: 0.7;
+    user-select: none;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: 14px;
+    font-weight: 600;
+    color: #f6f3efdd;
+    cursor: pointer;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      transform 0.2s ease;
+    user-select: none;
+  }
+  .nav-item i {
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+  }
+  .nav-item:hover {
+    background-color: rgba(255 255 255 / 0.18);
+    color: #fff;
+    transform: translateX(6px);
+  }
+  .nav-item.active {
+    background-color: #f6f3efdd;
+    color: #2b7a78;
+    font-weight: 700;
+    box-shadow: 0 0 12px #d49a2aaa;
+  }
+
+  /* Main content */
+  .main-content {
+    margin-left: 300px;
+    flex-grow: 1;
+    padding: 40px 48px;
+    background: #f6f3ef;
+    color: #2b7a78;
+    min-height: 100vh;
+  }
+
+  .content-section {
+    display: none;
+    animation: fadeInUp 0.4s ease forwards;
+  }
+  .content-section.active {
+    display: block;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .section-header {
+    background: linear-gradient(135deg, #d49a2a 0%, #2b7a78 100%);
+    padding: 28px 32px;
+    border-radius: 20px 20px 0 0;
+    color: #f6f3ef;
+    user-select: none;
+    box-shadow: 0 8px 15px rgb(212 154 42 / 0.6);
+  }
+  .section-title {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+  .section-description {
+    font-weight: 500;
+    font-size: 14.5px;
+    opacity: 0.85;
+  }
+
+  .content-body {
+    background: #fff;
+    padding: 32px 32px 36px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 12px rgb(43 122 120 / 0.15);
+    color: #345652;
+  }
+
+  .editable-area {
+    background: #eef6f9;
+    border: 2px solid #d4c18c;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 22px;
+    transition: border-color 0.3s ease;
+  }
+  .editable-area:hover,
+  .editable-area:focus-within {
+    border-color: #d49a2a;
+  }
+  .editable-area textarea {
+    width: 100%;
+    min-height: 140px;
+    background: transparent;
+    border: none;
+    resize: vertical;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #2b7a78;
+    outline-offset: 4px;
+  }
+  .editable-area textarea::placeholder {
+    color: #9b8f61;
+    font-style: italic;
+  }
+
+  .add-section-btn {
+    background: linear-gradient(135deg, #d49a2a 0%, #2b7a78 100%);
+    color: #f6f3ef;
+    font-weight: 700;
+    border: none;
+    border-radius: 25px;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    font-family: 'Inter', sans-serif;
+  }
+  .add-section-btn:hover {
+    box-shadow: 0 6px 20px rgb(212 154 42 / 0.6);
+    transform: translateY(-2px);
+  }
+
+  /* Robot emoji decor */
+  .robot-decoration {
+    position: fixed;
+    bottom: 0px;
+    right: -25px;
+    font-size: 68px;
+    color: rgba(212, 154, 42, 0.15);
+    user-select: none;
+    animation: float 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .robot-decoration img{
+    height: 140px;
+    opacity: 0.5;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  /* Modo escuro */
+  body.dark-mode {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    color: #c1c1c1;
+  }
+  body.dark-mode .sidebar {
+    background: linear-gradient(180deg, #4e4e4e, #222);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+    color: #ddd;
+  }
+  body.dark-mode .sidebar-header {
+    background: rgba(255 255 255 / 0.05);
+  }
+  body.dark-mode #toggleTheme {
+    color: #ffd54f;
+  }
+  body.dark-mode #toggleTheme:hover {
+    color: #f6f3ef;
+  }
+  body.dark-mode .nav-item {
+    color: #ccc;
+  }
+  body.dark-mode .nav-item:hover {
+    background-color: rgba(255 255 255 / 0.12);
+    color: #fff;
+  }
+  body.dark-mode .nav-item.active {
+    background-color: #555;
+    color: #ffd54f;
+    box-shadow: 0 0 12px #d49a2aaa;
+  }
+  body.dark-mode .main-content {
+    background: #121212;
+    color: #ddd;
+  }
+  body.dark-mode .content-body {
+    background: #222;
+    color: #ddd;
+    box-shadow: 0 4px 12px rgb(255 215 79 / 0.2);
+  }
+  body.dark-mode .editable-area {
+    background: #333;
+    border-color: #aa8c2d;
+  }
+  body.dark-mode .editable-area:hover,
+  body.dark-mode .editable-area:focus-within {
+    border-color: #ffd54f;
+  }
+  body.dark-mode .editable-area textarea {
+    color: #eee;
+  }
+  body.dark-mode .section-header {
+    background: linear-gradient(135deg, #d49a2a 0%, #4b4b4b 100%);
+    color: #ffd54f;
+    box-shadow: 0 8px 15px rgb(212 154 42 / 0.9);
+  }
+  body.dark-mode .add-section-btn {
+    background: linear-gradient(135deg, #d49a2a 0%, #4b4b4b 100%);
+    color: #fff;
+  }
+  body.dark-mode .add-section-btn:hover {
+    box-shadow: 0 6px 20px rgb(212 154 42 / 0.9);
+  }
+  body.dark-mode .robot-decoration {
+    color: rgba(212, 154, 42, 0.25);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .container {
+      flex-direction: column;
+    }
+    .sidebar {
+      position: relative;
+      width: 100%;
+      height: auto;
+      border-radius: 0 0 20px 20px;
+      box-shadow: none;
+      padding-bottom: 24px;
+    }
+    .main-content {
+      margin-left: 0;
+      padding: 24px 20px 40px;
+    }
+    .nav-item {
+      padding: 12px 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav class="sidebar" aria-label="Menu lateral Dom Boto GDD">
+    <div class="sidebar-header" role="banner">
+      <div class="logo" aria-label="Logo do Dom Boto"><img src="/image-removebg-preview.png" alt=""> DOM BOTO</div>
+      <div class="subtitle">Game Design Document</div>
+    </div>
+
+    <!-- Botão de alternar tema -->
+    <div style="padding: 0 24px 12px; text-align: center;">
+      <button id="toggleTheme" aria-label="Alternar modo claro/escuro" title="Alternar modo claro/escuro">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+
+    <div class="nav-menu" role="navigation" aria-label="Seções do documento">
+      <div class="nav-category">Conceito</div>
+      <div role="list">
+        <div tabindex="0" class="nav-item active" role="listitem" onclick="showSection('overview', this)" onkeypress="if(event.key==='Enter') showSection('overview', this)">
+          <i class="fas fa-home" aria-hidden="true"></i>Resumo Geral
+        </div>
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('story', this)" onkeypress="if(event.key==='Enter') showSection('story', this)">
+          <i class="fas fa-book" aria-hidden="true"></i>Capítulos
+        </div>
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('characters', this)" onkeypress="if(event.key==='Enter') showSection('characters', this)">
+          <i class="fas fa-users" aria-hidden="true"></i>Personagens
+        </div>
+      </div>
+      <div class="nav-category">Gameplay</div>
+      <div role="list">
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('mechanics', this)" onkeypress="if(event.key==='Enter') showSection('mechanics', this)">
+          <i class="fas fa-cogs" aria-hidden="true"></i>Mecânicas
+        </div>
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('levels', this)" onkeypress="if(event.key==='Enter') showSection('levels', this)">
+          <i class="fas fa-map" aria-hidden="true"></i>Níveis
+        </div>
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('items', this)" onkeypress="if(event.key==='Enter') showSection('items', this)">
+          <i class="fas fa-toolbox" aria-hidden="true"></i>Itens
+        </div>
+      </div>
+      <div class="nav-category">Arte & Audio</div>
+      <div role="list">
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('art', this)" onkeypress="if(event.key==='Enter') showSection('art', this)">
+          <i class="fas fa-palette" aria-hidden="true"></i>Arte
+        </div>
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('audio', this)" onkeypress="if(event.key==='Enter') showSection('audio', this)">
+          <i class="fas fa-music" aria-hidden="true"></i>Audio
+        </div>
+      </div>
+      <div class="nav-category">Produção</div>
+      <div role="list">
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('technical', this)" onkeypress="if(event.key==='Enter') showSection('technical', this)">
+          <i class="fas fa-code" aria-hidden="true"></i>Técnico
+        </div>
+        <div tabindex="0" class="nav-item" role="listitem" onclick="showSection('timeline', this)" onkeypress="if(event.key==='Enter') showSection('timeline', this)">
+          <i class="fas fa-calendar" aria-hidden="true"></i>Cronograma
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <!-- Seções -->
+    <section id="overview" class="content-section active" tabindex="0">
+      <header class="section-header" aria-label="Resumo Geral">
+        <h1 class="section-title">Resumo Geral - Dom Boto</h1>
+        <p class="section-description">Conceito principal e pilares do jogo</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Descreva aqui o conceito principal do jogo Dom Boto. Quem é o robô mordomo? Qual é o objetivo principal? Em que mundo se passa?" data-key="overview-0">Dom Boto é um jogo sobre um robô mordomo elegante dos anos 60 que deve gerenciar uma mansão futurística...</textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('overview')">+ Adicionar Seção</button>
+      </article>
+    </section>
+
+    <section id="story" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Capítulos">
+        <h1 class="section-title">Capítulos</h1>
+        <p class="section-description">Estrutura narrativa e progressão da história</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Organize a história em capítulos. Como a narrativa de Dom Boto se desenvolve? Quais são os marcos principais?" data-key="story-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('story')">+ Adicionar Capítulo</button>
+      </article>
+    </section>
+
+    <section id="characters" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Personagens">
+        <h1 class="section-title">Personagens</h1>
+        <p class="section-description">Dom Boto e outros personagens importantes</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Descreva Dom Boto: sua personalidade, aparência, habilidades e motivações." data-key="characters-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('characters')">+ Adicionar Personagem</button>
+      </article>
+    </section>
+
+    <section id="mechanics" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Mecânicas">
+        <h1 class="section-title">Mecânicas</h1>
+        <p class="section-description">Regras e sistemas de gameplay</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Liste e explique as mecânicas principais do jogo. Como o jogador interage com o mundo?" data-key="mechanics-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('mechanics')">+ Adicionar Mecânica</button>
+      </article>
+    </section>
+
+    <section id="levels" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Níveis">
+        <h1 class="section-title">Níveis</h1>
+        <p class="section-description">Mapas e cenários do jogo</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Detalhe os níveis ou áreas exploráveis. Quais os desafios e ambientações?" data-key="levels-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('levels')">+ Adicionar Nível</button>
+      </article>
+    </section>
+
+    <section id="items" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Itens">
+        <h1 class="section-title">Itens</h1>
+        <p class="section-description">Inventário e objetos colecionáveis</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Liste os itens importantes do jogo. Quais suas funções e como obtê-los?" data-key="items-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('items')">+ Adicionar Item</button>
+      </article>
+    </section>
+
+    <section id="art" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Arte">
+        <h1 class="section-title">Arte</h1>
+        <p class="section-description">Estilo visual, referências e conceito artístico</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Descreva o estilo artístico. Referências visuais, paleta de cores e estética geral." data-key="art-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('art')">+ Adicionar Detalhe</button>
+      </article>
+    </section>
+
+    <section id="audio" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Audio">
+        <h1 class="section-title">Audio</h1>
+        <p class="section-description">Trilha sonora, efeitos sonoros e ambientação sonora</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Liste as ideias para música, sons e efeitos. Qual vibe sonora o jogo terá?" data-key="audio-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('audio')">+ Adicionar Detalhe</button>
+      </article>
+    </section>
+
+    <section id="technical" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Técnico">
+        <h1 class="section-title">Técnico</h1>
+        <p class="section-description">Tecnologias, motores e ferramentas usadas</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Descreva as tecnologias, engines e frameworks. Como será o desenvolvimento?" data-key="technical-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('technical')">+ Adicionar Detalhe</button>
+      </article>
+    </section>
+
+    <section id="timeline" class="content-section" tabindex="0">
+      <header class="section-header" aria-label="Cronograma">
+        <h1 class="section-title">Cronograma</h1>
+        <p class="section-description">Planejamento e etapas do projeto</p>
+      </header>
+      <article class="content-body">
+        <div class="editable-area">
+          <textarea placeholder="Monte um cronograma com etapas e prazos. Quando cada parte será feita?" data-key="timeline-0"></textarea>
+        </div>
+        <button class="add-section-btn" onclick="addEditableSection('timeline')">+ Adicionar Etapa</button>
+      </article>
+    </section>
+  </main>
+</div>
+
+<div class="robot-decoration" aria-hidden="true"><img src="/image-removebg-preview (1).png" alt=""></div>
+
+<script>
+  // Mostrar seção ao clicar no menu e trocar a ativa
+  function showSection(sectionId, element) {
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+    element.classList.add('active');
+
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(sec => {
+      if (sec.id === sectionId) {
+        sec.classList.add('active');
+        sec.focus();
+      } else {
+        sec.classList.remove('active');
+      }
+    });
+  }
+
+  // Adicionar nova seção editável dentro de uma seção (tipo nova textarea)
+  function addEditableSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    const contentBody = section.querySelector('.content-body');
+    if (!contentBody) return;
+
+    // Cria nova área editável
+    const newArea = document.createElement('div');
+    newArea.className = 'editable-area';
+
+    // Usa índice para criar uma key única pra salvar no localStorage
+    const textareas = section.querySelectorAll('textarea');
+    let newIndex = textareas.length;
+    const newKey = sectionId + '-' + newIndex;
+
+    const textarea = document.createElement('textarea');
+    textarea.placeholder = "Nova seção editável...";
+    textarea.dataset.key = newKey;
+    newArea.appendChild(textarea);
+
+    // Insere antes do botão de adicionar
+    const addBtn = contentBody.querySelector('.add-section-btn');
+    contentBody.insertBefore(newArea, addBtn);
+
+    // Salvar a estrutura toda no localStorage
+    saveAllData();
+
+    // Ouvir mudanças pra salvar
+    textarea.addEventListener('input', saveAllData);
+
+    textarea.focus();
+  }
+
+  // Salva todo o conteúdo de todas as textareas e estrutura de seções
+  function saveAllData() {
+    const sections = document.querySelectorAll('.content-section');
+    const data = {};
+
+    sections.forEach(section => {
+      const keyBase = section.id;
+      data[keyBase] = [];
+
+      const textareas = section.querySelectorAll('textarea');
+      textareas.forEach((ta, idx) => {
+        data[keyBase].push(ta.value);
+      });
+    });
+
+    localStorage.setItem('domBotoGDD', JSON.stringify(data));
+  }
+
+  // Carrega tudo do localStorage, cria áreas adicionais conforme necessário e preenche os textareas
+  function loadAllData() {
+    const dataStr = localStorage.getItem('domBotoGDD');
+    if (!dataStr) return;
+
+    const data = JSON.parse(dataStr);
+
+    Object.entries(data).forEach(([sectionId, texts]) => {
+      const section = document.getElementById(sectionId);
+      if (!section) return;
+
+      // Pega as textareas atuais, que já tem pelo menos 1
+      const textareas = section.querySelectorAll('textarea');
+      const baseCount = textareas.length;
+
+      // Se precisar criar mais textareas, cria elas (a partir do segundo em diante)
+      for(let i = 0; i < texts.length; i++) {
+        if (i < baseCount) {
+          // Já existe textarea, só preencher
+          textareas[i].value = texts[i];
+        } else {
+          // Criar textarea extra
+          const contentBody = section.querySelector('.content-body');
+          const newArea = document.createElement('div');
+          newArea.className = 'editable-area';
+
+          const textarea = document.createElement('textarea');
+          textarea.value = texts[i];
+          textarea.placeholder = "Nova seção editável...";
+          textarea.dataset.key = sectionId + '-' + i;
+
+          newArea.appendChild(textarea);
+
+          // Insere antes do botão de adicionar
+          const addBtn = contentBody.querySelector('.add-section-btn');
+          contentBody.insertBefore(newArea, addBtn);
+
+          // Ouvir mudanças pra salvar
+          textarea.addEventListener('input', saveAllData);
+        }
+      }
+    });
+  }
+
+  // Função para adicionar listener em todas as textareas já existentes
+  function addInputListeners() {
+    const allTextareas = document.querySelectorAll('textarea');
+    allTextareas.forEach(ta => {
+      ta.addEventListener('input', saveAllData);
+    });
+  }
+
+  // Alternar modo claro/escuro
+  const toggleBtn = document.getElementById('toggleTheme');
+  const body = document.body;
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    if(body.classList.contains('dark-mode')) {
+      toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+      localStorage.setItem('domBoto-theme', 'dark');
+    } else {
+      toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+      localStorage.setItem('domBoto-theme', 'light');
+    }
+  });
+
+  // Carregar tema salvo
+  function loadTheme() {
+    const theme = localStorage.getItem('domBoto-theme');
+    if(theme === 'dark') {
+      body.classList.add('dark-mode');
+      toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+      body.classList.remove('dark-mode');
+      toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+  }
+
+  // Inicializar
+  document.addEventListener('DOMContentLoaded', () => {
+    loadTheme();
+    loadAllData();
+    addInputListeners();
+
+    // Garantir que a seção ativa inicial está visível
+    const activeNav = document.querySelector('.nav-item.active');
+    if(activeNav) {
+      showSection(activeNav.textContent.trim().toLowerCase(), activeNav);
+    }
+  });
+</script>
+
+</body>
+</html>
