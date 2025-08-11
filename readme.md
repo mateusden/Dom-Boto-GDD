@@ -1,8 +1,8 @@
 # 🎮 GDD — Dom Boto
 
-<img src="./assets/head-robot.png" alt="🤖" width="32" height="32" style="vertical-align:middle;" />
 
-Este é o **Game Design Document (GDD)** do jogo **Dom Boto**, feito em um único arquivo HTML para facilitar a visualização e compartilhamento.  
+
+<img src="./assets/head-robot.png" alt="🤖" width="45" height="32" style="vertical-align:middle;" />Este é o **Game Design Document (GDD)** do jogo **Dom Boto**, feito em um único arquivo HTML para facilitar a visualização e compartilhamento.  
 O site foi desenvolvido com ajuda de **inteligência artificial** devido à falta de tempo para codificação manual.
 
 ## 📌 Sobre
