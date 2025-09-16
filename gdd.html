@@ -184,6 +184,15 @@
     color: #345652;
   }
 
+  .subsection-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 20px 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #d49a2a;
+    color: #2b7a78;
+  }
+
   .editable-area {
     background: #eef6f9;
     border: 2px solid #d4c18c;
@@ -213,6 +222,10 @@
     font-style: italic;
   }
 
+  .small-editable {
+    min-height: 80px !important;
+  }
+
   .add-section-btn {
     background: linear-gradient(135deg, #d49a2a 0%, #2b7a78 100%);
     color: #f6f3ef;
@@ -223,6 +236,7 @@
     cursor: pointer;
     transition: box-shadow 0.3s ease, transform 0.2s ease;
     font-family: 'Inter', sans-serif;
+    margin-top: 10px;
   }
   .add-section-btn:hover {
     box-shadow: 0 6px 20px rgb(212 154 42 / 0.6);
@@ -288,6 +302,10 @@
     background: #222;
     color: #ddd;
     box-shadow: 0 4px 12px rgb(255 215 79 / 0.2);
+  }
+  body.dark-mode .subsection-title {
+    color: #ffd54f;
+    border-bottom-color: #d49a2a;
   }
   body.dark-mode .editable-area {
     background: #333;
@@ -409,10 +427,27 @@
         <p class="section-description">Conceito principal e pilares do jogo</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Conceito Principal</h3>
         <div class="editable-area">
-          <textarea placeholder="Descreva aqui o conceito principal do jogo Dom Boto. Quem é o robô mordomo? Qual é o objetivo principal? Em que mundo se passa?" data-key="overview-0">Dom Boto é um jogo sobre um robô mordomo elegante dos anos 60 que deve gerenciar uma mansão futurística...</textarea>
+          <textarea placeholder="Descreva aqui o conceito principal do jogo Dom Boto. Quem é o robô mordomo? Qual é o objetivo principal? Em que mundo se passa?" data-key="overview-0">Dom Boto é um jogo sobre um robô mordomo elegante dos anos 60 que deve gerenciar uma mansão futurística enquanto explora e escapa de perigos.</textarea>
         </div>
-        <button class="add-section-btn" onclick="addEditableSection('overview')">+ Adicionar Seção</button>
+        
+        <h3 class="subsection-title">Público-Alvo</h3>
+        <div class="editable-area">
+          <textarea placeholder="Para quem este jogo é destinado? Idade, gênero, preferências de jogo..." data-key="overview-1" class="small-editable"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Gênero e Plataformas</h3>
+        <div class="editable-area">
+          <textarea placeholder="Quais são os gêneros do jogo? Em quais plataformas será lançado?" data-key="overview-2" class="small-editable"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Diferenciais Competitivos</h3>
+        <div class="editable-area">
+          <textarea placeholder="O que torna Dom Boto único em relação a outros jogos do mesmo gênero?" data-key="overview-3"></textarea>
+        </div>
+        
+        <button class="add-section-btn" onclick="addEditableSection('overview')">+ Adicionar Nova Seção</button>
       </article>
     </section>
 
@@ -422,9 +457,31 @@
         <p class="section-description">Estrutura narrativa e progressão da história</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Sinopse da História</h3>
         <div class="editable-area">
-          <textarea placeholder="Organize a história em capítulos. Como a narrativa de Dom Boto se desenvolve? Quais são os marcos principais?" data-key="story-0"></textarea>
+          <textarea placeholder="Resumo geral da narrativa. Qual é a premissa básica?" data-key="story-0"></textarea>
         </div>
+        
+        <h3 class="subsection-title">Capítulo 1: Introdução</h3>
+        <div class="editable-area">
+          <textarea placeholder="Descreva o primeiro capítulo: ambientação, objetivos iniciais, introdução de personagens..." data-key="story-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Capítulo 2: Desenvolvimento</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como a história progride? Quais desafios são introduzidos?" data-key="story-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Capítulo 3: Clímax</h3>
+        <div class="editable-area">
+          <textarea placeholder="Momento de maior tensão da narrativa. Como os eventos se encaminham para o desfecho?" data-key="story-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Final e Desfecho</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como a história termina? Há múltiplos finais?" data-key="story-4"></textarea>
+        </div>
+        
         <button class="add-section-btn" onclick="addEditableSection('story')">+ Adicionar Capítulo</button>
       </article>
     </section>
@@ -435,9 +492,31 @@
         <p class="section-description">Dom Boto e outros personagens importantes</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Dom Boto (Protagonista)</h3>
         <div class="editable-area">
           <textarea placeholder="Descreva Dom Boto: sua personalidade, aparência, habilidades e motivações." data-key="characters-0"></textarea>
         </div>
+        
+        <h3 class="subsection-title">Antagonista Principal</h3>
+        <div class="editable-area">
+          <textarea placeholder="Quem é o vilão principal? Quais são seus objetivos e características?" data-key="characters-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Aliados e NPCs</h3>
+        <div class="editable-area">
+          <textarea placeholder="Descreva os personagens secundários que ajudam ou interagem com Dom Boto." data-key="characters-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Inimigos Comuns</h3>
+        <div class="editable-area">
+          <textarea placeholder="Liste e descreva os inimigos que o jogador enfrentará regularmente." data-key="characters-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Chefes</h3>
+        <div class="editable-area">
+          <textarea placeholder="Descreva os chefes principais do jogo, seus padrões de ataque e fraquezas." data-key="characters-4"></textarea>
+        </div>
+        
         <button class="add-section-btn" onclick="addEditableSection('characters')">+ Adicionar Personagem</button>
       </article>
     </section>
@@ -448,9 +527,36 @@
         <p class="section-description">Regras e sistemas de gameplay</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Movimentação e Controles</h3>
         <div class="editable-area">
-          <textarea placeholder="Liste e explique as mecânicas principais do jogo. Como o jogador interage com o mundo?" data-key="mechanics-0"></textarea>
+          <textarea placeholder="Como o jogador controla Dom Boto? Quais são os controles básicos?" data-key="mechanics-0"></textarea>
         </div>
+        
+        <h3 class="subsection-title">Sistema de Combate</h3>
+        <div class="editable-area">
+          <textarea placeholder="Descreva como funciona o combate. Dom Boto tem ataques? Como se defende?" data-key="mechanics-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Mecânicas de Furtividade</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como funciona a furtividade no jogo? Há sistema de detecção?" data-key="mechanics-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Sistema de Progressão</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como o personagem evolui ao longo do jogo? Há upgrades de habilidades?" data-key="mechanics-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Puzzles e Interação com Ambiente</h3>
+        <div class="editable-area">
+          <textarea placeholder="Que tipos de puzzles existem? Como o jogador interage com o ambiente?" data-key="mechanics-4"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Sistema de Salvamento e Checkpoints</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como funciona o sistema de salvamento? Há checkpoints automáticos?" data-key="mechanics-5" class="small-editable"></textarea>
+        </div>
+        
         <button class="add-section-btn" onclick="addEditableSection('mechanics')">+ Adicionar Mecânica</button>
       </article>
     </section>
@@ -461,10 +567,32 @@
         <p class="section-description">Mapas e cenários do jogo</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Estrutura Geral dos Níveis</h3>
         <div class="editable-area">
-          <textarea placeholder="Detalhe os níveis ou áreas exploráveis. Quais os desafios e ambientações?" data-key="levels-0"></textarea>
+          <textarea placeholder="Como os níveis são organizados? São lineares, com hub central, mundo aberto?" data-key="levels-0"></textarea>
         </div>
-        <button class="add-section-btn" onclick="addEditableSection('levels')">+ Adicionar Nível</button>
+        
+        <h3 class="subsection-title">Mansão Principal</h3>
+        <div class="editable-area">
+          <textarea placeholder="Descreva a mansão principal: layout, salas importantes, segredos..." data-key="levels-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Áreas Externas</h3>
+        <div class="editable-area">
+          <textarea placeholder="Descreva os ambientes externos da mansão: jardins, florestas, etc." data-key="levels-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Áreas Secretas</h3>
+        <div class="editable-area">
+          <textarea placeholder="Há áreas secretas? Como são acessadas e o que contêm?" data-key="levels-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Progressão entre Níveis</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como o jogador avança entre os níveis? Há requisitos específicos?" data-key="levels-4" class="small-editable"></textarea>
+        </div>
+        
+        <button class="add-section-btn" onclick="addEditableSection('levels')">+ Adicionar Nível/Área</button>
       </article>
     </section>
 
@@ -474,10 +602,32 @@
         <p class="section-description">Inventário e objetos colecionáveis</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Itens de Utilidade</h3>
         <div class="editable-area">
-          <textarea placeholder="Liste os itens importantes do jogo. Quais suas funções e como obtê-los?" data-key="items-0"></textarea>
+          <textarea placeholder="Liste itens que ajudam na progressão: chaves, ferramentas, dispositivos..." data-key="items-0"></textarea>
         </div>
-        <button class="add-section-btn" onclick="addEditableSection('items')">+ Adicionar Item</button>
+        
+        <h3 class="subsection-title">Consumíveis</h3>
+        <div class="editable-area">
+          <textarea placeholder="Itens que são consumidos: recuperação de energia, buffs temporários..." data-key="items-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Colecionáveis</h3>
+        <div class="editable-area">
+          <textarea placeholder="Itens colecionáveis: lore, segredos, recompensas por coleta completa..." data-key="items-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Upgrades e Melhorias</h3>
+        <div class="editable-area">
+          <textarea placeholder="Itens que melhoram permanentemente as capacidades de Dom Boto" data-key="items-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Sistema de Inventário</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como o inventário é organizado? Há limite de itens?" data-key="items-4" class="small-editable"></textarea>
+        </div>
+        
+        <button class="add-section-btn" onclick="addEditableSection('items')">+ Adicionar Categoria de Itens</button>
       </article>
     </section>
 
@@ -487,9 +637,31 @@
         <p class="section-description">Estilo visual, referências e conceito artístico</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Direção de Arte Geral</h3>
         <div class="editable-area">
           <textarea placeholder="Descreva o estilo artístico. Referências visuais, paleta de cores e estética geral." data-key="art-0"></textarea>
         </div>
+        
+        <h3 class="subsection-title">Design de Personagens</h3>
+        <div class="editable-area">
+          <textarea placeholder="Estética dos personagens: proporções, detalhes, animações..." data-key="art-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Ambientação e Cenários</h3>
+        <div class="editable-area">
+          <textarea placeholder="Estilo dos ambientes: arquitetura, iluminação, detalhes..." data-key="art-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Efeitos Visuais</h3>
+        <div class="editable-area">
+          <textarea placeholder="Efeitos especiais: partículas, iluminação, transições..." data-key="art-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Interface do Usuário (UI)</h3>
+        <div class="editable-area">
+          <textarea placeholder="Design da interface: menus, HUD, ícones, tipografia..." data-key="art-4"></textarea>
+        </div>
+        
         <button class="add-section-btn" onclick="addEditableSection('art')">+ Adicionar Detalhe</button>
       </article>
     </section>
@@ -500,9 +672,31 @@
         <p class="section-description">Trilha sonora, efeitos sonoros e ambientação sonora</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Direção de Áudio</h3>
         <div class="editable-area">
           <textarea placeholder="Liste as ideias para música, sons e efeitos. Qual vibe sonora o jogo terá?" data-key="audio-0"></textarea>
         </div>
+        
+        <h3 class="subsection-title">Trilha Sonora</h3>
+        <div class="editable-area">
+          <textarea placeholder="Estilo musical, temas para diferentes situações, compositores de referência..." data-key="audio-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Efeitos Sonoros</h3>
+        <div class="editable-area">
+          <textarea placeholder="Sons de ações, ambientes, personagens, interface..." data-key="audio-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Dublagem e Vozes</h3>
+        <div class="editable-area">
+          <textarea placeholder="Há dublagem? Quantos personagens terão voz? Estilo de voz desejado..." data-key="audio-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Mixagem e Implementação</h3>
+        <div class="editable-area">
+          <textarea placeholder="Como o áudio será implementado tecnicamente? Sistema de prioridades, mixagem dinâmica..." data-key="audio-4"></textarea>
+        </div>
+        
         <button class="add-section-btn" onclick="addEditableSection('audio')">+ Adicionar Detalhe</button>
       </article>
     </section>
@@ -513,9 +707,31 @@
         <p class="section-description">Tecnologias, motores e ferramentas usadas</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Motor de Jogo e Tecnologias</h3>
         <div class="editable-area">
           <textarea placeholder="Descreva as tecnologias, engines e frameworks. Como será o desenvolvimento?" data-key="technical-0"></textarea>
         </div>
+        
+        <h3 class="subsection-title">Requisitos do Sistema</h3>
+        <div class="editable-area">
+          <textarea placeholder="Requisitos mínimos e recomendados para executar o jogo" data-key="technical-1" class="small-editable"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Sistemas Implementados</h3>
+        <div class="editable-area">
+          <textarea placeholder="Quais sistemas técnicos serão necessários? IA, física, salvamento, etc." data-key="technical-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Ferramentas de Desenvolvimento</h3>
+        <div class="editable-area">
+          <textarea placeholder="Software adicional: editores de áudio, ferramentas de pixel art, versionamento..." data-key="technical-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Otimização e Performance</h3>
+        <div class="editable-area">
+          <textarea placeholder="Estratégias para garantir boa performance em diferentes dispositivos" data-key="technical-4"></textarea>
+        </div>
+        
         <button class="add-section-btn" onclick="addEditableSection('technical')">+ Adicionar Detalhe</button>
       </article>
     </section>
@@ -526,9 +742,31 @@
         <p class="section-description">Planejamento e etapas do projeto</p>
       </header>
       <article class="content-body">
+        <h3 class="subsection-title">Fase de Pré-Produção</h3>
         <div class="editable-area">
-          <textarea placeholder="Monte um cronograma com etapas e prazos. Quando cada parte será feita?" data-key="timeline-0"></textarea>
+          <textarea placeholder="Tarefas de concepção, documentação, prototipagem inicial..." data-key="timeline-0"></textarea>
         </div>
+        
+        <h3 class="subsection-title">Fase de Produção (Principais Marcos)</h3>
+        <div class="editable-area">
+          <textarea placeholder="Desenvolvimento dos sistemas principais, criação de conteúdo..." data-key="timeline-1"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Fase de Polimento</h3>
+        <div class="editable-area">
+          <textarea placeholder="Balanceamento, correção de bugs, refinamento de elementos..." data-key="timeline-2"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Testes e QA</h3>
+        <div class="editable-area">
+          <textarea placeholder="Plano de testes, feedback de usuários, ajustes finais..." data-key="timeline-3"></textarea>
+        </div>
+        
+        <h3 class="subsection-title">Lançamento e Pós-Lançamento</h3>
+        <div class="editable-area">
+          <textarea placeholder">Preparação para lançamento, suporte pós-lançamento, possíveis atualizações..." data-key="timeline-4"></textarea>
+        </div>
+        
         <button class="add-section-btn" onclick="addEditableSection('timeline')">+ Adicionar Etapa</button>
       </article>
     </section>
